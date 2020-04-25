@@ -1,8 +1,8 @@
 
 const board = document.querySelector('#board');
 const boardCtx = board.getContext('2d');
-const frames =  60;
-const gridSize = 15;
+const frames =  8;
+const gridSize = 20;
 let nextX = 0;
 let nextY = 0;
 const Snake = {
@@ -13,8 +13,8 @@ const Snake = {
     positionY: 10
 }
 const Apple = {
-    positionX: randomNumber(board.width),
-    positionY: randomNumber(board.height)
+    positionX: randomNumber(gridSize),
+    positionY: randomNumber(gridSize)
 }
 
 boardCtx.canvas.height = 400;
@@ -50,7 +50,7 @@ function keyDownEvent(e) {
 }
 
 function randomNumber(limit) {
-    return Math.ceil(Math.random() * limit);
+    return Math.floor(Math.random() * limit);
 }
 
 function repaintBoard() {
@@ -59,39 +59,42 @@ function repaintBoard() {
 
 function paintSnake() {
     boardCtx.fillStyle = 'green';
-    boardCtx.fillRect(Snake.positionX, Snake.positionY, gridSize, gridSize);
+    boardCtx.fillRect(Snake.positionX * gridSize, Snake.positionY * gridSize, gridSize, gridSize);
 }
 
 function checkLimits() {
     if (Snake.positionX < 0) {
-        Snake.positionX = board.width - 1;
-    } else if (Snake.positionX === board.width - 1) {
+        Snake.positionX = gridSize - 1;
+    }
+    if (Snake.positionX > gridSize - 1) {
         Snake.positionX = 0;
-    } else if (Snake.positionY < 0) {
-        Snake.positionY = board.height - 1;
-    } else if (Snake.positionY === board.height - 1) {
+    } 
+    if (Snake.positionY < 0) {
+        Snake.positionY = gridSize - 1;
+    } 
+    if (Snake.positionY > gridSize - 1) {
         Snake.positionY = 0;
     }
 }
 
 function paintApple() {
     boardCtx.fillStyle = 'red';
-    boardCtx.fillRect(Apple.positionX, Apple.positionY, gridSize, gridSize);
+    boardCtx.fillRect(Apple.positionX * gridSize, Apple.positionY * gridSize, gridSize, gridSize);
 }
 
 function isSnakeHittingAppleXPosition() {
-    return ((Apple.positionX - gridSize) <= Snake.positionX) && ((Apple.positionX + gridSize) >= Snake.positionX);
+    return Apple.positionX === Snake.positionX;
 }
 
 function isSnakeHittingAppleYPosition() {
-    return (((Apple.positionY - gridSize) <= Snake.positionY)) && ((Apple.positionY + gridSize) >= Snake.positionY);
+    return Apple.positionY === Snake.positionY;
 }
 
 function checkHitApple() {
     if (isSnakeHittingAppleXPosition() && isSnakeHittingAppleYPosition()) {
         Snake.tailSize++;
-        Apple.positionX = randomNumber(board.width);
-        Apple.positionY = randomNumber(board.height);
+        Apple.positionX = randomNumber(gridSize);
+        Apple.positionY = randomNumber(gridSize);
     }
 }
 
