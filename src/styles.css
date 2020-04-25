@@ -5,14 +5,14 @@ body, html {
     overflow: hidden;
 }
 .title {
-  padding: 40px;
-  font-size: 30px;
+  padding: 8px;
+  font-size: 42px;
   font-family: 'Monoton', cursive;
   text-align: center;
   text-transform: uppercase;
-  text-shadow: 0 0 80px red,0 0 30px FireBrick,0 0 6px DarkRed;
+  text-shadow: 0 0 80px red, 0 0 30px firebrick, 0 0 6px darkred;
   color: red;
-  transform: rotate(341deg);
+  transform: rotate(346deg);
 }
 .title p { 
     margin:0; 
@@ -41,7 +41,7 @@ body, html {
 .board {
   display: flex;
   justify-content: center;
-  padding: 3em;
+  padding: 1em;
 }
 
 .board-canvas {
