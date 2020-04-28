@@ -1,6 +1,8 @@
 
 const board = document.querySelector('#board');
 const boardCtx = board.getContext('2d');
+const pointsDiv = document.querySelector('.point');
+const maxPointsDiv = document.querySelector('.max-points');
 const frames =  8;
 const gridSize = 20;
 let nextX = 0;
@@ -8,7 +10,7 @@ let nextY = 0;
 const Snake = {
     defaultTailSize: 3,
     tailSize: 3,
-    snakeBody: [],
+    body: [],
     positionX: 10, 
     positionY: 10
 }
@@ -16,6 +18,8 @@ const Apple = {
     positionX: randomNumber(gridSize),
     positionY: randomNumber(gridSize)
 }
+let points = 0;
+let maxPoints = 0;
 
 boardCtx.canvas.height = 400;
 boardCtx.canvas.width = 400;
@@ -59,7 +63,13 @@ function repaintBoard() {
 
 function paintSnake() {
     boardCtx.fillStyle = 'green';
-    boardCtx.fillRect(Snake.positionX * gridSize, Snake.positionY * gridSize, gridSize, gridSize);
+    Snake.body.forEach(tail => {
+        boardCtx.fillRect(tail.x * gridSize, tail.y * gridSize, gridSize, gridSize);
+        if (tail.x === Snake.positionX && tail.y === Snake.positionY) {
+            Snake.tailSize = Snake.defaultTailSize;
+            points = 0;
+        }
+    });
 }
 
 function checkLimits() {
@@ -90,12 +100,29 @@ function isSnakeHittingAppleYPosition() {
     return Apple.positionY === Snake.positionY;
 }
 
-function checkHitApple() {
+function checkEatApple() {
     if (isSnakeHittingAppleXPosition() && isSnakeHittingAppleYPosition()) {
         Snake.tailSize++;
+        points++;
         Apple.positionX = randomNumber(gridSize);
         Apple.positionY = randomNumber(gridSize);
+
+        if (points > maxPoints) {
+            maxPoints = points;
+        }
     }
+}
+
+function setSnakeBody() {
+    Snake.body.push({x: Snake.positionX, y: Snake.positionY});
+    while (Snake.body.length > Snake.tailSize) {
+        Snake.body.shift();
+    }
+}
+
+function setPoints() {
+    pointsDiv.textContent = points;
+    maxPointsDiv.textContent = maxPoints;
 }
 
 function draw() {
@@ -103,10 +130,12 @@ function draw() {
     Snake.positionX += nextX;
 
     checkLimits();
-    checkHitApple();
+    checkEatApple();
     repaintBoard();
     paintApple();
     paintSnake();
+    setSnakeBody();
+    setPoints();
 }
 
 document.addEventListener('keydown', keyDownEvent);

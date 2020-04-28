@@ -1,8 +1,10 @@
 body, html { 
     background-color: #111111;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%; 
-    overflow: hidden;
+    height: 100%;
+    overflow-x: hidden;
 }
 .title {
   padding: 8px;
@@ -17,6 +19,25 @@ body, html {
 .title p { 
     margin:0; 
 }
+
+.points {
+  color: red;
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  font-family: 'Monoton', cursive;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.mobile-controls {
+  display: flex;
+  color: red;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 1.5em;
+}
+
 .snake-title:hover { 
     text-shadow: 0 0 200px #ffffff,0 0 80px #008000,0 0 6px #0000ff; 
 }
