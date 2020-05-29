@@ -75,6 +75,33 @@ body, html {
   background: red;
 }
 
+.arrow {
+  display: inline-block;
+  border: solid red;
+  border-width: 0 3px 3px 0;
+  padding: 0.4rem;
+}
+
+.arrow:hover {
+  cursor: pointer;
+}
+
+.right {
+  transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+}
+
+.up {
+  transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+}
+
 @keyframes upper {
   0%,19.999%,22%,62.999%,64%, 64.999%,70%,100% {
     opacity:.99; text-shadow: 0 0 80px #ffffff,0 0 30px #008000,0 0 6px #0000ff;
